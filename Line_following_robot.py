@@ -47,3 +47,8 @@ while(True):
     cv2.imshow("edges_video",edges_video)
     #here we are gonna call a fuction to find box (here also we are finding the rotating_box)
     video_box = boxes(edges_video)
+    #here we will get image with box around the black line
+    # now we have to draw a line (actually 2 line ) equally distanced from the center of the image
+    #this line is the actual center of the image so that the black line from the previous image should co-inside
+    # if the box deviate from the 2 lines drawn then we can understand that its going wrong way
+    
