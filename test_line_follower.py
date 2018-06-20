@@ -29,7 +29,7 @@ while (True):
 
     # Find the contours of the frame
 
-    contours, hierarchy = cv2.findContours(thresh.copy(), 1, cv2.CHAIN_APPROX_NONE)
+    ret,contours, hierarchy = cv2.findContours(thresh.copy(), cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
 
     # Find the biggest contour (if detected)
 
