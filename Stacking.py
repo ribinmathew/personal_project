@@ -127,8 +127,13 @@ O = [[5,5],
      [5,5]]
 Z = [[6,6,0],
      [0,6,6]]
+S  = [[0,7,7],
+      [7,7,0]]
 
-cube = [L_cube,T_cube,I_cube,O,Z]
+J_cube = [[0,8],
+          [0,8],
+          [8,8]]
+cube = [L_cube,T_cube,I_cube,O,Z,S,J_cube]
 
 cubes = []
 
@@ -175,8 +180,13 @@ for l in range(len(permuted_cubes)):
    counting_no= 0
 
    for i in range(0,8):
+       #print(counting_no)
        if cube[13][i] !=0:
-           counting_no +=1
+           if cube[12][i] != 0:
+               if cube[11][i] != 0:
+                   counting_no += 1
+
+
        if counting_no == 8:
            counting_cubes +=1
            print(cube)
