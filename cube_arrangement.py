@@ -97,8 +97,7 @@ for i in range(0,8):
 #now we have to create a function to place the cube in the board
 
 def cube_placing(board,row,column,cube):
-    board_row_len = len(board)
-    board_column_len =len(board[0])
+
     cube_row_len =len(cube)
     cube_column_len =len(cube[0])
 
@@ -162,7 +161,11 @@ def rotation_cube(cube,rotation):
 
 # here we have to get the cube with all rotations and then place each of thm into the board and get the returning board
 rotated_cube_L = rotation_cube(L_cube,4)
-for i in rotated_cube_L:
-    board = np.zeros((14,8))
-    cube_placed_board = cube_placing(board,0,0,i)
-    print(cube_placed_board)
+#for i in rotated_cube_L:
+ #   board = np.zeros((14,8))
+#  cube_placed_board = cube_placing(board,0,0,i)
+#   print(cube_placed_board)
+
+cube_placed = cube_placing(board,0,0,L_cube)
+print(cube_placed)
+

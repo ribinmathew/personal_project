@@ -127,12 +127,30 @@ count  = 0
 print(len(shifts))
 for i in range(len(shifts)):
     for i in shifts[i]:
-        print(i)
+       # print(i)
         count += 1
 
-print(count)
+#print(count)
 
 
 # at last we reached a stage where we are pretty sure that permutations wont work!
 # the reason is simple if you go for the permutation its gonna be a huge number!
 # so we have to just loop through what ever cube we have and produce the op by placing each cube
+#so we are gonna do that!
+
+
+lists = ["l1","j1","t1","o","i1","s1","z1"]
+print(len(lists))
+check = []
+for i in range(len(lists)):
+    checks = permutations(lists,7)
+    check.append(checks)
+counting =0
+for i in range(len(check)):
+    for j in check[i]:
+        print(j)
+        print("")
+        counting +=1
+
+print(counting)
+
