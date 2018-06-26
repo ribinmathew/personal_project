@@ -1,6 +1,9 @@
 # here we are going to generate all the possible combination that can be generated from 2 cubes first
 
 import numpy as np
+from itertools import permutations
+from itertools import combinations
+
 
 # function for creating rotated cube
 def rotation_cube(cube,rotation):
@@ -92,4 +95,44 @@ for i in range(len(cubes)):
 for i in range(len(cubes)):
     print(len(cubes[i]))
 print(cubes[6][0])
-print(cubes[6][1])
+#print(cubes[6][1])
+
+l = [0,1]
+j = [2,4,11,21]
+T = [8,6]
+count =0
+loop = [l,j,T]
+
+
+
+#shift = permutations(loop,2)
+count= 0
+ppt = ("l1","l2","l3","l4","j1","j2","j3","j4","t1","t2","t3","t4","o","I1","I2","s1","s2","z1","z2")
+permutation = [("l1","j1","t1","o","i1","s1","z1"),("l2","j1","t1","o","i1","s1","z"),("l3","j1","t1","o","i1","s1","z1"),("l4","j1","t1","o","i1","s1","z1")]
+
+shifts = []
+for i in range(len(permutation)):
+    shift = permutations(permutation[i],4)
+    shifts.append(shift)
+
+
+
+#for i in range(len(shifts)):
+ #   print(shifts[i])
+count  = 0
+
+#print(count)
+
+#print(shifts[0])
+print(len(shifts))
+for i in range(len(shifts)):
+    for i in shifts[i]:
+        print(i)
+        count += 1
+
+print(count)
+
+
+# at last we reached a stage where we are pretty sure that permutations wont work!
+# the reason is simple if you go for the permutation its gonna be a huge number!
+# so we have to just loop through what ever cube we have and produce the op by placing each cube
