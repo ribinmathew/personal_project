@@ -5,11 +5,8 @@ import numpy as np
 from itertools import permutations
 
 
-
-
-
 def rotation_cube(tile,rotation):
-    rotation = rotation
+
 
     rotated_cubes = []
     count = 1
@@ -51,20 +48,19 @@ def rotation_cube(tile,rotation):
         for i in range(row):
             for j in range(column):
                 matrix[j][row - i-1] = tiles[i][j]
-                 #print(matrix)
+                #print(matrix)
                  #  print(matrix)
         matrix = np.reshape(matrix,(column,row))
-            #print(matrix)
-        rotated_cubes.append((matrix))
+       # print(matrix)
+             #print(matrix)
+        rotated_cubes.append(matrix)
         count = count+1
         #
 
 
 
 
-    return rotated_cubes
-
-
+    return rotated_cubes[-1]
 
 
 
@@ -133,7 +129,27 @@ S  = [[0,7,7],
 J_cube = [[0,8],
           [0,8],
           [8,8]]
-cube = [L_cube,T_cube,I_cube,O,Z,S,J_cube]
+
+
+L_cube2 = [[1,0],
+          [1,0],
+          [1,1]]
+#print(L_cube)
+T_cube2 = [[0,2,0],
+          [2,2,2]]
+I_cube2 = [[3,3,3,3]]
+
+O2 = [[5,5],
+     [5,5]]
+Z2 = [[6,6,0],
+     [0,6,6]]
+S2  = [[0,7,7],
+      [7,7,0]]
+
+J_cube2 = [[0,8],
+          [0,8],
+          [8,8]]
+cube = [L_cube,J_cube,O,I_cube,O,I_cube,L_cube,J_cube2,S,S2,Z,Z2]
 
 cubes = []
 
@@ -161,6 +177,7 @@ for i in (cubes):
 
 #print(permuted_cubes)
 counting_cubes = 0
+
 for l in range(len(permuted_cubes)):
    #print(l)
 
@@ -174,7 +191,34 @@ for l in range(len(permuted_cubes)):
                 if place_checker(board,j,k,i) == True:
                     checked_row = j
                     checked_column = k
-       cube = cube_placing(board,checked_row,checked_column,i)
+                    cube_to_place = i
+                if place_checker(board,j,k,i)==False:
+                    #print("false")
+                    cnt = 0
+                    for o in range(2,5):
+                        rotated_cube = rotation_cube(i,o)
+                        #print(rotated_cube)
+                        cnt +=1
+                        #print(cnt)
+                        if place_checker(board,j,k,rotated_cube) == True:
+                            checked_row = j
+                            checked_column = k
+                            cube_to_place = rotated_cube
+
+                            break
+
+      # print(cube_to_place)
+
+
+                            #print(cube_to_place)
+                            #print(i)
+
+
+                    #rotate cube and check
+                    #here we have to call the rotation function and check for 4 times
+       cube = cube_placing(board,checked_row,checked_column,cube_to_place)
+   #print(cube)
+
        #cube = cube_placing(cube,checked_row,checked_column,i)
 
    counting_no= 0
@@ -183,8 +227,12 @@ for l in range(len(permuted_cubes)):
        #print(counting_no)
        if cube[13][i] !=0:
            if cube[12][i] != 0:
+
                if cube[11][i] != 0:
-                   counting_no += 1
+                   if cube[10][i] != 0:
+                       if cube[10][i] != 0:
+                            counting_no += 1
+
 
 
        if counting_no == 8:
@@ -196,4 +244,3 @@ print(counting_cubes)
 #print(rotation)
 
 # so we have our 3 cubes  now lets place each of them in their place
-

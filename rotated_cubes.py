@@ -95,3 +95,19 @@ Z = [[7,7,0],
 #print(len(tile))
 #print(len(tile[0]))
 tiles = rotation_cube(L,4)
+
+
+def rotateTile(tile):
+    tileRows = len(tile)
+    tileCols = len(tile[0])
+    rotTile = np.zeros((tileCols, tileRows),
+                          dtype=np.int)  # After the rotation, the new matrix has number of rows and columns switched.
+
+    # Copy the values over
+    for i in range(tileRows):
+        for j in range(tileCols):
+            rotTile[j][tileRows - i - 1] = tile[i][j]
+    return rotTile
+
+
+print(rotateTile(Z))
