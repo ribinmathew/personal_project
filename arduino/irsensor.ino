@@ -1,72 +1,274 @@
 
 
-int MOTOR1_PIN1 = 3;
-int MOTOR1_PIN2 = 5;
-int MOTOR2_PIN1 = 6;
-int MOTOR2_PIN2 = 9;
+const int motorRPin1 = 22; // signal pin 1 for the right motor, connect to IN1
+const int motorREnable = 11; // enable pin for the right motor (PWM enabled)
 
+const int motorLPin1 = 23; // signal pin 1 for the left motor, connect to IN3
+const int motorLEnable = 12; // enable pin for the left motor (PWM enabled)
 
-int sensor[8]={39,41,43,45,47,49,51,53};
+const int irPins[8] = {39,41,43,45,47,49,51,53};
+int irSensorDigital[8] = {0,0,0,0,0,0,0,0};
+int i,j = 0;
+int d = 1000;
 
-int sensorReading[8] = { 0 };
-float activeSensor = 0;
-float totalSensor = 0;
-//float avgSensor =
-float avgSensor = 0; // Average sensor reading
+int irSensors = B00000000;
 
-float Kp = 3;   // Max deviation = 10 - 0 = 10 ||  255/10 = 25
-float Ki = 0.00015;
-float Kd = 2;
-
-float error = 0;
-float previousError = 0;
-float totalError = 0;
-
-float power = 0;
-
-int PWM_Left;
-int PWM_Right;
-
-int MAX_SPEED = 100;
-
+int motorLSpeed = 100;
+int motorRSpeed = 100;
+int error = 140;   // 145 best 200  //  normal 255  // mad 0
 void setup() {
-  for(int i=0; i<8; i++) {
-    pinMode(sensor[i], INPUT);
-  }
+
+
   Serial.begin(9600);
+
+
+  pinMode(motorLPin1,OUTPUT);
+  pinMode(motorLPin2,OUTPUT);
+  pinMode(motorLEnable,OUTPUT);
+
+  pinMode(motorRPin1,OUTPUT);
+  pinMode(motorRPin2,OUTPUT);
+  pinMode(motorREnable,OUTPUT);
+
+  /* Set-up IR sensor pins as input */
+  for (int i = 0; i <= 7; i++)
+  {pinMode(irPins[i], INPUT);}
+
+
 }
 
 void loop() {
+     scanD();
+     check();
+}
 
+void check( )
+{
+     switch (irSensors) {
+
+     case B00000000: // on white paper
+     rightS();
+     break;
+
+     case B10000000: // leftmost sensor on the line
+     rightS();
+     break;
+
+     case B01000000:
+     rightS();
+     break;
+
+     case B00100000:
+     rightS();
+     break;
+
+
+     case B00010000:
+     rightS();
+     break;
+
+     case B00001000:
+     leftS();
+     break;
+
+     case B00000100:
+     leftS();
+     break;
+
+     case B00000010:
+     leftS();
+     break;
+
+     case B00000001:
+     leftS();
+     break;
+
+     case B11000000:
+     rightS();
+     break;
+
+     case B01100000:
+     rightS();
+     break;
+
+     case B00110000:
+     rightS();
+     break;
+
+     case B00011000:
+     go();
+     break;
+
+     case B00001100:
+     leftS();
+     break;
+
+     case B00000110:
+     leftS();
+     break;
+
+     case B00000011:
+     leftS();
+     break;
+
+     case B11100000:
+     rightS();
+     break;
+
+     case B01110000:
+     rightS();
+     break;
+
+     case B00111000:
+     rightS();
+     break;
+
+     case B00011100:
+     leftS();
+     break;
+
+     case B00001110:
+     leftS();
+     break;
+
+     case B00000111:
+     leftS();
+     break;
+
+     case B11110000:
+     rightS();
+     break;
+
+     case B01111000:
+     rightS();
+     break;
+
+     case B00111100:
+     go();
+     break;
+
+     case B00011110:
+     leftS();
+     break;
+
+     case B00001111:
+     leftS();
+     break;
+
+     case B11111000:
+     rightS();
+     break;
+
+     case B01111100:
+     rightS();
+     break;
+
+     case B00111110:
+     leftS();
+     break;
+
+     case B00011111:
+     leftS();
+     break;
+
+     case B11111100:
+     rightS();
+     break;
+
+     case B01111110:
+     go();
+     break;
+
+     case B00111111:
+     leftS();
+     break;
+
+
+     case B11111110:
+     rightS();
+     break;
+
+     case B01111111:
+     leftS();
+     break;
+
+     case B11111111:
+      go();
+
+     break;
+
+
+     default:
+
+     Serial.print("Unhandled case: ");
+
+  }
+
+}
+
+
+
+
+
+void rightS()
+
+{
+     Serial.println("                      right motor forward (spin)");
+     analogWrite(motorREnable, motorRSpeed);
+     digitalWrite(motorRPin1, HIGH);
+
+
+     analogWrite(motorLEnable, 0);
+     digitalWrite(motorLPin1, LOW);
 
 
 }
 
-void readSensor() {
-  for(int i=1; i<7; i++)
-    {
-       if(digitalRead(sensor[i])==1){
-         sensorReading[i]=1;
-         }
-       if(digitalRead(sensor[i])==0){
-             sensorReading[i]=0;
 
-       }
-    }
+void leftS()  //turn left
+{
+     Serial.println("                         left  motor forward (spin)");
+     analogWrite(motorREnable, motorRSpeed-error);
+     digitalWrite(motorRPin1, 0);
 
-   =
-    for(int i=0; i<8; i++)
-    {
-      if(sensorReading[i]==1) { activeSensor+=1; }
-      totalSensor += sensorReading[i] ;
-    }
-    avgSensor = totalSensor/activeSensor;
-    Serial.print("avgSensor=");
-    Serial.println(avgSensor);
+     analogWrite(motorLEnable, motorLSpeed);
+     digitalWrite(motorLPin1, HIGH);
 
-    activeSensor = 0; totalSensor = 0;
-    for(int i=0; i<8; i++)
-    {
-      sensorReading[i]=0;
-    }
+
+}
+
+void go()
+{
+    Serial.println("                         forward ");
+     analogWrite(motorREnable, motorRSpeed);
+     digitalWrite(motorRPin1, HIGH);
+
+     analogWrite(motorLEnable, motorLSpeed);
+     digitalWrite(motorLPin1, HIGH);
+
+
+}
+
+void stopme()
+{
+     Serial.println("                         stop");
+     analogWrite(motorREnable, motorRSpeed);
+     digitalWrite(motorRPin1, LOW);
+     digitalWrite(motorRPin2, LOW);
+
+     analogWrite(motorLEnable, motorLSpeed);
+     digitalWrite(motorLPin1, LOW);
+     digitalWrite(motorLPin2, LOW);
+
+}
+
+
+
+
+void scanD()
+{
+  for ( byte count = 0; count < 8;count++ )
+{
+  bitWrite(irSensors, count, !digitalRead( irPins[count] ));
+}
 }
