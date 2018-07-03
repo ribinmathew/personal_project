@@ -1,4 +1,3 @@
-/*ultrasonic sensor*/
 const int trigpin = 37;
 const int echopin = 35;
 const int trigpin1  = 31;
@@ -26,8 +25,8 @@ int d = 1000;
 
 int irSensors = B00000000;
 
-int motorLSpeed = 80;
-int motorRSpeed = 80;
+int motorLSpeed = 70;
+int motorRSpeed = 70;
 int error = 140;   // 145 best 200  //  normal 255  // mad 0
 
 
@@ -102,9 +101,10 @@ Serial.println(distance1);
 
 void check( )
 {
-      if (distace <= 10){
-      Serial.println("object_detected")}
-
+      if (distance1 <= 15){
+      stopme();
+    }
+  else{
      switch (irSensors) {
 
      case B00000000: // on white paper
@@ -267,7 +267,7 @@ void check( )
 
 }
 
-
+}
 void SoftrightS1()
 
 {
@@ -423,5 +423,4 @@ void Turnright()
      delay(500);
 
 }
-
 
