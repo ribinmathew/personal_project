@@ -33,12 +33,20 @@ void setup() {
   for (int i = 0; i <= 7; i++)
   {pinMode(irPins[i], INPUT);}
 
-
+Turnleft();
+delay(250);
+go();
+delay(570);
+Turnright();
+delay(140);
+stopme();
 }
 
 void loop() {
      scanD();
      check();
+
+
 }
 
 void check( )
@@ -327,3 +335,39 @@ void scanD()
   bitWrite(irSensors, count, !digitalRead( irPins[count] ));
 }
 }
+
+
+void Turnleft()
+{
+  /*move left to find the line!*/
+
+
+     Serial.println("                         search");
+     analogWrite(motorREnable, 150);
+     digitalWrite(motorRPin1, HIGH);
+
+     analogWrite(motorLEnable, 0);
+     digitalWrite(motorLPin1, LOW);
+
+     delay(500);
+
+}
+
+
+void Turnright()
+{
+  /*move left to find the line!*/
+
+
+     Serial.println("                         search");
+     analogWrite(motorREnable, 0);
+     digitalWrite(motorRPin1, LOW);
+
+     analogWrite(motorLEnable, 150);
+     digitalWrite(motorLPin1, LOW);
+
+     delay(500);
+
+}
+
+
