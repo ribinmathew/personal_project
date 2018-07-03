@@ -13,8 +13,8 @@ int d = 1000;
 
 int irSensors = B00000000;
 
-int motorLSpeed = 100;
-int motorRSpeed = 100;
+int motorLSpeed = 80;
+int motorRSpeed = 80;
 int error = 140;   // 145 best 200  //  normal 255  // mad 0
 void setup() {
 
@@ -23,11 +23,10 @@ void setup() {
 
 
   pinMode(motorLPin1,OUTPUT);
-  pinMode(motorLPin2,OUTPUT);
+
   pinMode(motorLEnable,OUTPUT);
 
   pinMode(motorRPin1,OUTPUT);
-  pinMode(motorRPin2,OUTPUT);
   pinMode(motorREnable,OUTPUT);
 
   /* Set-up IR sensor pins as input */
@@ -47,52 +46,52 @@ void check( )
      switch (irSensors) {
 
      case B00000000: // on white paper
-     rightS();
+     HardrightS();
      break;
 
      case B10000000: // leftmost sensor on the line
-     rightS();
+     HardrightS();
      break;
 
      case B01000000:
-     rightS();
+     SoftrightS();
      break;
 
      case B00100000:
-     rightS();
+     HardrightS();
      break;
 
 
      case B00010000:
-     rightS();
+     SoftrightS();
      break;
 
      case B00001000:
-     leftS();
+     SoftleftS();
      break;
 
      case B00000100:
-     leftS();
+     HardleftS();
      break;
 
      case B00000010:
-     leftS();
+     HardleftS();
      break;
 
      case B00000001:
-     leftS();
+     HardleftS();
      break;
 
      case B11000000:
-     rightS();
+     HardrightS();
      break;
 
      case B01100000:
-     rightS();
+     SoftrightS();
      break;
 
      case B00110000:
-     rightS();
+     SoftrightS();
      break;
 
      case B00011000:
@@ -100,47 +99,47 @@ void check( )
      break;
 
      case B00001100:
-     leftS();
+     SoftleftS();
      break;
 
      case B00000110:
-     leftS();
+     SoftleftS();
      break;
 
      case B00000011:
-     leftS();
+     HardleftS();
      break;
 
      case B11100000:
-     rightS();
+     SoftrightS();
      break;
 
      case B01110000:
-     rightS();
+     SoftrightS();
      break;
 
      case B00111000:
-     rightS();
+     SoftrightS();
      break;
 
      case B00011100:
-     leftS();
+     SoftleftS();
      break;
 
      case B00001110:
-     leftS();
+     SoftleftS();
      break;
 
      case B00000111:
-     leftS();
+     SoftleftS();
      break;
 
      case B11110000:
-     rightS();
+     SoftrightS1();
      break;
 
      case B01111000:
-     rightS();
+      SoftrightS1();
      break;
 
      case B00111100:
@@ -148,31 +147,31 @@ void check( )
      break;
 
      case B00011110:
-     leftS();
+     SoftleftS1();
      break;
 
      case B00001111:
-     leftS();
+     SoftleftS();
      break;
 
      case B11111000:
-     rightS();
+     SoftrightS();
      break;
 
      case B01111100:
-     rightS();
+     SoftrightS();
      break;
 
      case B00111110:
-     leftS();
+     SoftleftS();
      break;
 
      case B00011111:
-     leftS();
+     SoftleftS();
      break;
 
      case B11111100:
-     rightS();
+     SoftrightS();
      break;
 
      case B01111110:
@@ -180,20 +179,20 @@ void check( )
      break;
 
      case B00111111:
-     leftS();
+     SoftleftS();
      break;
 
 
      case B11111110:
-     rightS();
+     SoftrightS();
      break;
 
      case B01111111:
-     leftS();
+     SoftleftS();
      break;
 
      case B11111111:
-      go();
+      stopme();
 
      break;
 
@@ -207,32 +206,88 @@ void check( )
 }
 
 
-
-
-
-void rightS()
+void SoftrightS1()
 
 {
      Serial.println("                      right motor forward (spin)");
-     analogWrite(motorREnable, motorRSpeed);
-     digitalWrite(motorRPin1, HIGH);
+     analogWrite(motorREnable, motorRSpeed-error);
+     digitalWrite(motorRPin1, LOW);
 
 
-     analogWrite(motorLEnable, 0);
+     analogWrite(motorLEnable, motorLSpeed/1.05);
      digitalWrite(motorLPin1, LOW);
 
 
 }
 
 
-void leftS()  //turn left
+void SoftleftS1()  //turn left
 {
      Serial.println("                         left  motor forward (spin)");
-     analogWrite(motorREnable, motorRSpeed-error);
-     digitalWrite(motorRPin1, 0);
+     analogWrite(motorREnable, motorRSpeed/1.05);
+     digitalWrite(motorRPin1, LOW);
 
-     analogWrite(motorLEnable, motorLSpeed);
-     digitalWrite(motorLPin1, HIGH);
+     analogWrite(motorLEnable, motorLSpeed-error);
+     digitalWrite(motorLPin1, LOW);
+
+}
+
+
+
+
+
+void SoftrightS()
+
+{
+     Serial.println("                      right motor forward (spin)");
+     analogWrite(motorREnable, motorRSpeed-error);
+     digitalWrite(motorRPin1, LOW);
+
+
+     analogWrite(motorLEnable, motorLSpeed/1.15);
+     digitalWrite(motorLPin1, LOW);
+
+
+}
+
+
+void SoftleftS()  //turn left
+{
+     Serial.println("                         left  motor forward (spin)");
+     analogWrite(motorREnable, motorRSpeed/1.15);
+     digitalWrite(motorRPin1, LOW);
+
+     analogWrite(motorLEnable, motorLSpeed-error);
+     digitalWrite(motorLPin1, LOW);
+
+
+}
+
+
+
+void HardrightS()
+
+{
+     Serial.println("                      right motor forward (spin)");
+     analogWrite(motorREnable, motorRSpeed-error);
+     digitalWrite(motorRPin1, LOW);
+
+
+     analogWrite(motorLEnable,motorLSpeed/1.3);
+     digitalWrite(motorLPin1, LOW);
+
+
+}
+
+
+void HardleftS()  //turn left
+{
+     Serial.println("                         left  motor forward (spin)");
+     analogWrite(motorREnable, motorRSpeed/1.3);
+     digitalWrite(motorRPin1, LOW);
+
+     analogWrite(motorLEnable, motorLSpeed-error);
+     digitalWrite(motorLPin1, LOW);
 
 
 }
@@ -241,10 +296,10 @@ void go()
 {
     Serial.println("                         forward ");
      analogWrite(motorREnable, motorRSpeed);
-     digitalWrite(motorRPin1, HIGH);
+     digitalWrite(motorRPin1, LOW);
 
-     analogWrite(motorLEnable, motorLSpeed);
-     digitalWrite(motorLPin1, HIGH);
+     analogWrite(motorLEnable,motorLSpeed );
+     digitalWrite(motorLPin1, LOW);
 
 
 }
@@ -252,13 +307,13 @@ void go()
 void stopme()
 {
      Serial.println("                         stop");
-     analogWrite(motorREnable, motorRSpeed);
+     analogWrite(motorREnable, 0);
      digitalWrite(motorRPin1, LOW);
-     digitalWrite(motorRPin2, LOW);
 
-     analogWrite(motorLEnable, motorLSpeed);
+
+     analogWrite(motorLEnable, 0);
      digitalWrite(motorLPin1, LOW);
-     digitalWrite(motorLPin2, LOW);
+
 
 }
 
