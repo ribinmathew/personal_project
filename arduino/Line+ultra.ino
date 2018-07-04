@@ -101,7 +101,7 @@ Serial.println(distance1);
 
 void check( )
 {
-      if (distance1 <= 15){
+      if (distance1 <= 10){
       stopme();
     }
   else{
