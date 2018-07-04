@@ -22,7 +22,7 @@ void loop()
 scanD();
 junction_count();
 
-
+Serial.println(junction_counter)
 }
 
 
@@ -46,12 +46,26 @@ void junction_count()
      switch (irSensors) {
 
      case B11111111:
-      Serial.println("Found Junction")
+        junction_count1();
+
      break;
 
 
      default:
 
      Serial.print("Unhandled case: ");
+
+  }
+
+
+  void junction_count1 ()
+  {
+
+  if(junction == false){
+          junction_counter +=1;
+          junction = true
+          Serial.println("Found Junction")
+          }
+
 
   }
