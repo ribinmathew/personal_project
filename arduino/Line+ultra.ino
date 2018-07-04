@@ -7,7 +7,9 @@ long duration;
 int distance;
 long duration1;
 int distance1;
-
+/*counter*/
+int counter = 0;
+boolean is isobject = false;
 
 /*Linefollower*/
 
@@ -66,7 +68,7 @@ void loop()
      scanD();
      check();
      distace();
-
+    counter();
 
 }
 
@@ -101,7 +103,10 @@ Serial.println(distance1);
 
 void check( )
 {
-      if (distance1 <= 10){
+Serial.println(counter);
+
+      if (distance1 <= 10)
+      {
       stopme();
     }
   else{
@@ -455,3 +460,19 @@ void Turnright()
 
 }
 
+void Counter()
+{
+
+ if (distance <= 10 && isobject==false){
+ counter +=1;
+ isobject =true;
+ delay(2000);
+ }
+ if(distance > 20)
+ {
+ isobject =false
+ }
+
+ Serial.println(counter);
+
+}

@@ -33,7 +33,7 @@
  isobject =true;
  delay(2000);
  }
- if(distance > 10)
+ if(distance > 20)
  {
  isobject =false
  }
