@@ -173,7 +173,7 @@ void check( )
      break;
 
      case B11100000:
-     SoftrightS();
+     SoftrightS1();
      break;
 
      case B01110000:
@@ -193,15 +193,15 @@ void check( )
      break;
 
      case B00000111:
-     SoftleftS();
+     SoftleftS1();
      break;
-
+/*here we have straght line*/
      case B11110000:
-     SoftrightS1();
+     SoftrightS2();
      break;
 
      case B01111000:
-      SoftrightS1();
+      SoftrightS2();
      break;
 
      case B00111100:
@@ -209,12 +209,13 @@ void check( )
      break;
 
      case B00011110:
-     SoftleftS1();
+     SoftleftS2();
      break;
 
      case B00001111:
-     SoftleftS();
+     SoftleftS2();
      break;
+/*bigger than straight line */
 
      case B11111000:
      SoftrightS();
@@ -268,10 +269,11 @@ void check( )
 }
 
 }
-void SoftrightS1()
+
+void SoftrightS2()
 
 {
-     Serial.println("                      right motor forward (spin)");
+     Serial.println("                      Softright2");
      analogWrite(motorREnable, motorRSpeed-error);
      digitalWrite(motorRPin1, LOW);
 
@@ -283,10 +285,39 @@ void SoftrightS1()
 }
 
 
+void SoftleftS2()  //turn left
+{
+     Serial.println("                         Softleft2");
+     analogWrite(motorREnable, motorRSpeed/1.05);
+     digitalWrite(motorRPin1, LOW);
+
+     analogWrite(motorLEnable, motorLSpeed-error);
+     digitalWrite(motorLPin1, LOW);
+
+}
+
+
+
+
+void SoftrightS1()
+
+{
+     Serial.println("                      SoftrightS1");
+     analogWrite(motorREnable, motorRSpeed-error);
+     digitalWrite(motorRPin1, LOW);
+
+
+     analogWrite(motorLEnable, motorLSpeed/1.1);
+     digitalWrite(motorLPin1, LOW);
+
+
+}
+
+
 void SoftleftS1()  //turn left
 {
-     Serial.println("                         left  motor forward (spin)");
-     analogWrite(motorREnable, motorRSpeed/1.05);
+     Serial.println("                         Softleft1");
+     analogWrite(motorREnable, motorRSpeed/1.1);
      digitalWrite(motorRPin1, LOW);
 
      analogWrite(motorLEnable, motorLSpeed-error);
@@ -301,12 +332,12 @@ void SoftleftS1()  //turn left
 void SoftrightS()
 
 {
-     Serial.println("                      right motor forward (spin)");
+     Serial.println("                      softRight");
      analogWrite(motorREnable, motorRSpeed-error);
      digitalWrite(motorRPin1, LOW);
 
 
-     analogWrite(motorLEnable, motorLSpeed/1.15);
+     analogWrite(motorLEnable, motorLSpeed/1.2);
      digitalWrite(motorLPin1, LOW);
 
 
@@ -315,8 +346,8 @@ void SoftrightS()
 
 void SoftleftS()  //turn left
 {
-     Serial.println("                         left  motor forward (spin)");
-     analogWrite(motorREnable, motorRSpeed/1.15);
+     Serial.println("                         softleft");
+     analogWrite(motorREnable, motorRSpeed/1.2);
      digitalWrite(motorRPin1, LOW);
 
      analogWrite(motorLEnable, motorLSpeed-error);
@@ -330,7 +361,7 @@ void SoftleftS()  //turn left
 void HardrightS()
 
 {
-     Serial.println("                      right motor forward (spin)");
+     Serial.println("                      HardRight");
      analogWrite(motorREnable, motorRSpeed-error);
      digitalWrite(motorRPin1, LOW);
 
@@ -344,7 +375,7 @@ void HardrightS()
 
 void HardleftS()  //turn left
 {
-     Serial.println("                         left  motor forward (spin)");
+     Serial.println("                         Hardleft");
      analogWrite(motorREnable, motorRSpeed/1.3);
      digitalWrite(motorRPin1, LOW);
 
