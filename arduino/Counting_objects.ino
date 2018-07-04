@@ -24,17 +24,21 @@
  digitalWrite(trigPin, LOW);
  duration = pulseIn(echoPin, HIGH);
  distance = (duration/2) / 29.1;
- if (distance <= 10){
- currentState = 1;
+
+
+
+
+ if (distance <= 10 && isobject==false){
+ counter +=1;
+ isobject =true;
+ delay(2000);
  }
- else {
- currentState = 0;
+ if(distance > 10)
+ {
+ isobject =false
  }
- delay(200);
- if(currentState != previousState){
- if(currentState == 1){
- counter = counter + 1;
+
  Serial.println(counter);
  }
- }
- }
+
+
