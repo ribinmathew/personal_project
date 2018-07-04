@@ -7,9 +7,11 @@ long duration;
 int distance;
 long duration1;
 int distance1;
+
 /*counter*/
-int counter = 0;
-boolean is isobject = false;
+
+ int counter = 0;
+ boolean isobject = false;
 
 /*Linefollower*/
 
@@ -27,8 +29,8 @@ int d = 1000;
 
 int irSensors = B00000000;
 
-int motorLSpeed = 70;
-int motorRSpeed = 70;
+int motorLSpeed = 100;
+int motorRSpeed = 100;
 int error = 140;   // 145 best 200  //  normal 255  // mad 0
 
 
@@ -68,13 +70,15 @@ void loop()
      scanD();
      check();
      distace();
-    counter();
+     count();
+
 
 }
 
 
 
-void distace() {
+void distace()
+{
 digitalWrite(trigpin, LOW);
 delayMicroseconds(2);
 digitalWrite(trigpin,HIGH);
@@ -90,10 +94,12 @@ delayMicroseconds(10);
 digitalWrite(trigpin1,LOW);
 duration1 = pulseIn(echopin1,HIGH);
 distance1 = duration1*0.034/2;
+/*
 Serial.print("Distace: ");
 Serial.println(distance);
+
 Serial.print("Distace1:");
-Serial.println(distance1);
+Serial.println(distance1); */
 
 }
 
@@ -103,11 +109,14 @@ Serial.println(distance1);
 
 void check( )
 {
-Serial.println(counter);
+  Serial.print("Counter = ");
+  Serial.println(counter);
 
-      if (distance1 <= 10)
-      {
+      if (distance1 <= 10){
       stopme();
+    }
+    if(counter == 3){
+      Serial.println("Turn Around");
     }
   else{
      switch (irSensors) {
@@ -117,7 +126,7 @@ Serial.println(counter);
      break;
 
      case B10000000: // leftmost sensor on the line
-     HardrightS();
+     Hardright();
      break;
 
      case B01000000:
@@ -146,7 +155,7 @@ Serial.println(counter);
      break;
 
      case B00000001:
-     HardleftS();
+     Hardleft();
      break;
 
      case B11000000:
@@ -279,11 +288,11 @@ void SoftrightS2()
 
 {
      Serial.println("                      Softright2");
-     analogWrite(motorREnable, motorRSpeed-error);
+     analogWrite(motorREnable, motorRSpeed);
      digitalWrite(motorRPin1, LOW);
 
 
-     analogWrite(motorLEnable, motorLSpeed/1.05);
+     analogWrite(motorLEnable, motorLSpeed/1.4);
      digitalWrite(motorLPin1, LOW);
 
 
@@ -293,10 +302,10 @@ void SoftrightS2()
 void SoftleftS2()  //turn left
 {
      Serial.println("                         Softleft2");
-     analogWrite(motorREnable, motorRSpeed/1.05);
+     analogWrite(motorREnable, motorRSpeed/1.4);
      digitalWrite(motorRPin1, LOW);
 
-     analogWrite(motorLEnable, motorLSpeed-error);
+     analogWrite(motorLEnable, motorLSpeed);
      digitalWrite(motorLPin1, LOW);
 
 }
@@ -308,11 +317,11 @@ void SoftrightS1()
 
 {
      Serial.println("                      SoftrightS1");
-     analogWrite(motorREnable, motorRSpeed-error);
+     analogWrite(motorREnable, motorRSpeed);
      digitalWrite(motorRPin1, LOW);
 
 
-     analogWrite(motorLEnable, motorLSpeed/1.1);
+     analogWrite(motorLEnable, motorLSpeed/1.6);
      digitalWrite(motorLPin1, LOW);
 
 
@@ -322,10 +331,10 @@ void SoftrightS1()
 void SoftleftS1()  //turn left
 {
      Serial.println("                         Softleft1");
-     analogWrite(motorREnable, motorRSpeed/1.1);
+     analogWrite(motorREnable, motorRSpeed/1.6);
      digitalWrite(motorRPin1, LOW);
 
-     analogWrite(motorLEnable, motorLSpeed-error);
+     analogWrite(motorLEnable, motorLSpeed);
      digitalWrite(motorLPin1, LOW);
 
 }
@@ -338,11 +347,11 @@ void SoftrightS()
 
 {
      Serial.println("                      softRight");
-     analogWrite(motorREnable, motorRSpeed-error);
+     analogWrite(motorREnable, motorRSpeed);
      digitalWrite(motorRPin1, LOW);
 
 
-     analogWrite(motorLEnable, motorLSpeed/1.2);
+     analogWrite(motorLEnable, motorLSpeed/1.8);
      digitalWrite(motorLPin1, LOW);
 
 
@@ -352,10 +361,10 @@ void SoftrightS()
 void SoftleftS()  //turn left
 {
      Serial.println("                         softleft");
-     analogWrite(motorREnable, motorRSpeed/1.2);
+     analogWrite(motorREnable, motorRSpeed/1.8);
      digitalWrite(motorRPin1, LOW);
 
-     analogWrite(motorLEnable, motorLSpeed-error);
+     analogWrite(motorLEnable, motorLSpeed);
      digitalWrite(motorLPin1, LOW);
 
 
@@ -367,11 +376,11 @@ void HardrightS()
 
 {
      Serial.println("                      HardRight");
-     analogWrite(motorREnable, motorRSpeed-error);
+     analogWrite(motorREnable, motorRSpeed);
      digitalWrite(motorRPin1, LOW);
 
 
-     analogWrite(motorLEnable,motorLSpeed/1.3);
+     analogWrite(motorLEnable,motorLSpeed/2);
      digitalWrite(motorLPin1, LOW);
 
 
@@ -381,10 +390,10 @@ void HardrightS()
 void HardleftS()  //turn left
 {
      Serial.println("                         Hardleft");
-     analogWrite(motorREnable, motorRSpeed/1.3);
+     analogWrite(motorREnable, motorRSpeed/2);
      digitalWrite(motorRPin1, LOW);
 
-     analogWrite(motorLEnable, motorLSpeed-error);
+     analogWrite(motorLEnable, motorLSpeed);
      digitalWrite(motorLPin1, LOW);
 
 
@@ -460,19 +469,49 @@ void Turnright()
 
 }
 
-void Counter()
-{
 
+
+
+void Hardright()
+
+{
+     Serial.println("                      HardRight");
+     analogWrite(motorREnable, motorRSpeed);
+     digitalWrite(motorRPin1, LOW);
+
+
+     analogWrite(motorLEnable,motorLSpeed/3);
+     digitalWrite(motorLPin1, LOW);
+
+
+}
+
+
+void Hardleft()  //turn left
+{
+     Serial.println("                         Hardleft");
+     analogWrite(motorREnable, motorRSpeed/3);
+     digitalWrite(motorRPin1, LOW);
+
+     analogWrite(motorLEnable, motorLSpeed);
+     digitalWrite(motorLPin1, LOW);
+
+
+}
+
+
+void count()
+{
  if (distance <= 10 && isobject==false){
  counter +=1;
  isobject =true;
- delay(2000);
+ delay(1000);
  }
  if(distance > 20)
  {
- isobject =false
+ isobject =false;
  }
 
- Serial.println(counter);
+ /*Serial.println(counter);*/
+ }
 
-}
